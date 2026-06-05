@@ -1,0 +1,128 @@
+variables:
+  DOCKER_HOST: tcp://127.0.0.1:2375
+  DOCKER_DRIVER: overlay2
+  #ADD intelligeni specific variables here except the group variables. Avoid putting sensitive data directly here.
+  #for image name "<image_name>" container image url will be "intelligeniedge.azurecr.io/<image_name>"
+  # keep the name of project in sonarQube same as image_name here
+  IMAGE_NAME: ig-servicenow-pack
+
+
+
+
+default:
+  image: docker:18.09.7
+  services:
+    - docker:18.09.7-dind
+stages:
+  # - test
+  - unittest
+  - verification
+  - build
+  - tag
+  - publish
+
+
+# pytest:
+#   stage: test
+#   inherit:
+#     default: false
+#   services:
+#     - redis
+#   image:
+#     name: python:3.8
+#   variables:
+#     GIT_DEPTH: 0
+#   script:
+#     - pip install -r requirements.txt
+#     - pip install pytest
+#     - pip install coverage
+#     - coverage run -m pytest tests/ --junitxml=reports.xml
+#     - coverage xml -o coverage-reports/coverage-reports.xml --include=smartcenter/*,core/*,vault/*,tests/*
+#   artifacts:
+#     reports:
+#       junit: reports.xml
+#     paths:
+#       - coverage-reports/coverage-reports.xml
+#   rules:
+#     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH =="dev"'
+
+sonarqube-check:
+  stage: verification
+  inherit:
+    default: false
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  variables:
+    GIT_DEPTH: 0
+  script:
+    - sonar-scanner -Dsonar.qualitygate.wait=true -Dsonar.projectKey=$IMAGE_NAME
+  allow_failure: true
+  # dependencies:
+  #   - pytest
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH =="dev" || $CI_COMMIT_BRANCH =="lilly"'
+
+unit-tests:
+  stage: unittest
+  inherit:
+    default: false
+  image: node:20
+  script:
+    - yarn install --frozen-lockfile
+    - yarn test
+  allow_failure: false
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+
+acr-build-kaniko:
+  stage: build
+  inherit:
+    default: false
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"intelligeniedge.azurecr.io\":{\"username\":\"$EDGE_ACR_APP_ID\",\"password\":\"$EDGE_ACR_APP_SECRET\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination intelligeniedge.azurecr.io/$IMAGE_NAME:$CI_COMMIT_BRANCH-$CI_PIPELINE_ID --cache=true
+  # after_script:
+  #   - rm /tmp/$CI_PIPELINE_ID.json
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^Release-.*$/ || $CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH =="lilly"'
+
+tagging:
+  stage: tag
+  inherit:
+    default: false
+  image:
+    name: alpine/git
+    entrypoint: [""]
+  script:
+    - git config user.email "${GITLAB_USER_EMAIL}"
+    - git config user.name "${GITLAB_USER_NAME}"
+    - version=$(echo $CI_COMMIT_TITLE | grep Merge | sed -nr 's/.*-(v[0-9]+)\.([0-9]+)\.([0-9]+).*/\1.\2.\3/p')
+    - echo $version
+    - git remote add api-origin https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/${CI_PROJECT_PATH}
+    - git tag -a $version -m "releasing new tag $version"
+    - git push api-origin $version
+  dependencies:
+    - sonarqube-check
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+
+
+acr-publish:
+  stage: publish
+  inherit:
+    default: false
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"intelligeniedge.azurecr.io\":{\"username\":\"$EDGE_ACR_APP_ID\",\"password\":\"$EDGE_ACR_APP_SECRET\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination intelligeniedge.azurecr.io/$IMAGE_NAME:$CI_COMMIT_TAG --cache=true
+  rules:
+    - if: $CI_COMMIT_TAG
+

@@ -1,0 +1,205 @@
+[
+    {
+        "name": "StartDiscovery",
+        "description": "Start Discovery API",
+        "method": "POST",
+        "url": "/api/discovery/start",
+        "tags": {
+            "onboarding": [
+                "schedule",
+                "logicmonitor-discovery-action",
+                "logicmonitor"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "zone_id",
+                "type": "string"
+            },
+            {
+                "name": "stack_id",
+                "type": "string"
+            },
+            {
+                "name": "vault_path",
+                "type": "string"
+            },
+            {
+                "name": "rediscovery",
+                "type": "string",
+                "optional": true
+            }
+        ],
+        "sync": true,
+        "custom_monitor": true
+    },
+    {
+        "name": "VerifyLogicmonitorAPI",
+        "description": "Start verification of Logicmonitor API",
+        "method": "POST",
+        "url": "/api/verification/step/verify/apiVerification",
+        "tags": {
+            "onboarding": [
+                "logicmonitor-verify-apiVerification"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "vault_path",
+                "type": "string"
+            }
+        ],
+        "sync": true,
+        "custom_monitor": true
+    },
+    {
+        "name": "ConstructAlertsPayload",
+        "description": "Trigger Transformer API to fetch Alerts Payload",
+        "method": "POST",
+        "url": "/api/alerts/fetchPayload",
+        "tags": {
+            "onboarding": [
+                "logicmonitor-get-transformer-alerts-action"
+            ]
+        },
+        "sync": true,
+        "custom_monitor": true
+    },
+    {
+        "name": "GetMetricsData",
+        "description": "Get Metrics Data API",
+        "method": "POST",
+        "url": "/api/metrics/getMetricData",
+        "tags": {
+            "onboarding": [
+                "logicmonitor-get-metrics-action"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "deviceId",
+                "type": "number"
+            },
+            {
+                "name": "deviceDataSourceId",
+                "type": "number"
+            },
+            {
+                "name": "graphId",
+                "type": "number"
+            },
+            {
+                "name": "instanceId",
+                "type": "number"
+            },
+            {
+                "name": "metric_name",
+                "type": "string"
+            },
+            {
+                "name": "start_iso",
+                "type": "string"
+            },
+            {
+                "name": "end_iso",
+                "type": "string"
+            },
+            {
+                "name": "aggregation",
+                "type": "string"
+            },
+            {
+                "name": "interval_in_seconds",
+                "type": "number"
+            },
+            {
+                "name": "zone_id",
+                "type": "string"
+            },
+            {
+                "name": "stack_id",
+                "type": "string"
+            },
+            {
+                "name": "vault_path",
+                "type": "string"
+            },
+            {
+                "name": "filters",
+                "type": "any",
+                "optional": true
+            }
+        ],
+        "sync": true,
+        "custom_monitor": true
+    },
+    {
+        "name": "UpdateAlertNoteWithServicenowTicketId",
+        "description": "Update Alert Note With Servicenow TicketId",
+        "method": "POST",
+        "url": "/api/alerts/updateAlertNote",
+        "tags": {
+            "onboarding": [
+                "logicmonitor-update-alert-note"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "stack_id",
+                "type": "string"
+            },
+            {
+                "name": "zone_id",
+                "type": "string"
+            },
+            {
+                "name": "vault_path",
+                "type": "string"
+            },
+            {
+                "name": "source_alert_id",
+                "type": "string"
+            },
+            {
+                "name": "servicenow_ticket_id",
+                "type": "string"
+            },
+            {
+                "name": "observe_display_id",
+                "type": "string"
+            }
+            
+        ],
+        "sync": true,
+        "custom_monitor": true
+    },
+    {
+        "name": "StartRelationshipDiscovery",
+        "description": "Start Relationship Discovery API",
+        "method": "POST",
+        "url": "/api/discoverRelationships/start",
+        "tags": {
+            "onboarding": [
+                "schedule",
+                "logicmonitor-relationship-discovery-action",
+                "logicmonitor"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "zone_id",
+                "type": "string"
+            },
+            {
+                "name": "stack_id",
+                "type": "string"
+            },
+            {
+                "name": "vault_path",
+                "type": "string"
+            }
+        ],
+        "sync": true,
+        "custom_monitor": true
+    }
+]

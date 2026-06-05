@@ -1,0 +1,448 @@
+[
+    {
+        "name": "CreateIncident",
+        "description": "Creates ServiceNow Incident",
+        "method": "POST",
+        "url": "/api/incident/create",
+        "tags": {
+            "integration": [
+                "servicenow",
+                "servicenow-create-incident"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "short_description",
+                "type": "string"
+            },
+            {
+                "name": "description",
+                "type": "string"
+            },
+            {
+                "name": "sys_ci_id",
+                "optional": true,
+                "type": "string"
+            },
+            {
+                "name": "scenario_id",
+                "type": "string"
+            },
+            {
+                "name": "vault_path",
+                "type": "string"
+            },
+            {
+                "name": "base_url",
+                "type": "string"
+            },
+            {
+                "name": "comments",
+                "optional": true,
+                "type": "string"
+            },
+            {
+                "name": "sys_domain",
+                "optional": true,
+                "type": "string"
+            },
+            {
+                "name": "assignment_group",
+                "type": "string"
+            },
+            {
+                "name": "service_offering",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "location",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "priority",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "category",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "subcategory",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "caller_id",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "impact",
+                "type": "string"
+            },
+            {
+                "name": "urgency",
+                "type": "string"
+            },
+            {
+                "name": "tenant_id",
+                "type": "string"
+            },
+            {
+                "name": "observe_assignment_group",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "reassignment_action_id",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "transient_time",
+                "type": "number",
+                "optional": true
+            },
+            {
+                "name": "edge_id",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "first_execution",
+                "type": "string",
+                "optional": true
+            }
+        ],
+        "sync": true,
+        "custom_monitor": true
+    },
+    {
+        "name": "UpdateIncident",
+        "description": "Updates ServiceNow Incident worknotes & priority",
+        "method": "PUT",
+        "url": "/api/incident/update",
+        "tags": {
+            "integration": [
+                "servicenow",
+                "servicenow-update-incident"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "incidentId",
+                "type": "string"
+            },
+            {
+                "name": "scenario_id",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "work_notes",
+                "optional": true,
+                "type": "string"
+            },
+            {
+                "name": "vault_path",
+                "type": "string"
+            },
+            {
+                "name": "base_url",
+                "type": "string"
+            },
+            {
+                "name": "comments",
+                "optional": true,
+                "type": "string"
+            },
+            {
+                "name": "assignment_group",
+                "optional": true,
+                "type": "string"
+            },
+            {
+                "name": "impact",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "urgency",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "priority",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "affected_ci_names",
+                "optional": true,
+                "type": "string"
+            },
+            {
+                "name": "tenant_id",
+                "type": "string"
+            },
+            {
+                "name": "observe_assignment_group",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "reassignment_action_id",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "transient_time",
+                "type": "number",
+                "optional": true
+            },
+            {
+                "name": "edge_id",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "first_execution",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "interface",
+                "type": "string",
+                "optional": true
+            }
+        ],
+        "sync": true,
+        "custom_monitor": true
+    },
+    {
+        "name": "CloseIncident",
+        "description": "Closes ServiceNow Incident",
+        "method": "PUT",
+        "url": "/api/incident/close",
+        "tags": {
+            "integration": [
+                "servicenow",
+                "servicenow-close-incident"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "incidentId",
+                "type": "string"
+            },
+            {
+                "name": "close_notes",
+                "type": "string"
+            },
+            {
+                "name": "vault_path",
+                "type": "string"
+            },
+            {
+                "name": "base_url",
+                "type": "string"
+            },
+            {
+                "name": "tenant_id",
+                "type": "string"
+            },
+            {
+                "name": "observe_assignment_group",
+                "type": "string",
+                "optional": true
+            }
+        ],
+        "sync": true,
+        "custom_monitor": true
+    },
+    {
+        "name": "ResolveIncident",
+        "description": "Resolves ServiceNow Incident",
+        "method": "PUT",
+        "url": "/api/incident/resolve",
+        "tags": {
+            "integration": [
+                "servicenow",
+                "servicenow-resolve-incident"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "incidentId",
+                "type": "string"
+            },
+            {
+                "name": "close_notes",
+                "type": "string"
+            },
+            {
+                "name": "vault_path",
+                "type": "string"
+            },
+            {
+                "name": "base_url",
+                "type": "string"
+            },
+            {
+                "name": "tenant_id",
+                "type": "string"
+            },
+            {
+                "name": "observe_assignment_group",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "allow_post_transient_resolution",
+                "type": "boolean",
+                "optional": true
+            },
+            {
+                "name": "scenario_id",
+                "type": "string",
+                "optional": true
+            }
+        ],
+        "sync": true,
+        "custom_monitor": true
+    },
+    {
+        "name": "ServiceNowDiscovery",
+        "description": "Discover ServiceNow CMDB nodes and relationships",
+        "method": "POST",
+        "url": "/api/discovery/start",
+        "tags": {
+            "onboarding": [
+                "servicenow-discovery-action"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "zone_id",
+                "type": "string"
+            },
+            {
+                "name": "stack_id",
+                "type": "string"
+            },
+            {
+                "name": "vault_path",
+                "type": "string"
+            }
+        ],
+        "sync": true,
+        "custom_monitor": true
+    },
+    {
+        "name": "VerifyCredentials",
+        "description": "Verify API for credentials",
+        "method": "POST",
+        "url": "/api/discovery/step/verify/createStack",
+        "tags": {
+            "onboarding": [
+                "servicenow-verify-createStack"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "url",
+                "type": "string"
+            },
+            {
+                "name": "vault_path",
+                "type": "string"
+            }
+        ],
+        "sync": true,
+        "custom_monitor": true
+    },
+    {
+        "name": "FetchIncidentData",
+        "description": "Fetch Incident data from servicenow",
+        "method": "POST",
+        "url": "/api/incident/fetchIncidentData",
+        "tags": {
+            "integration": [
+                "servicenow",
+                "servicenow-fetch-incident"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "base_url",
+                "type": "string"
+            },
+            {
+                "name": "vault_path",
+                "type": "string"
+            },
+            {
+                "name": "start_time",
+                "type": "string"
+            },
+            {
+                "name": "end_time",
+                "type": "string"
+            },
+            {
+                "name": "tenant_id",
+                "type": "string"
+            }
+        ],
+        "sync": true,
+        "custom_monitor": true
+    },
+    {
+        "name": "ReassignIncident",
+        "description": "Reassign ServiceNow Incident",
+        "method": "POST",
+        "url": "/api/incident/reassign",
+        "tags": {
+            "integration": [
+                "servicenow",
+                "servicenow-reassign-incident"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "incidentId",
+                "type": "string"
+            },
+            {
+                "name": "vault_path",
+                "type": "string"
+            },
+            {
+                "name": "base_url",
+                "type": "string"
+            },
+            {
+                "name": "observe_assignment_group",
+                "type": "string"
+            },
+            {
+                "name": "updated_assignment_group",
+                "type": "string"
+            },
+            {
+                "name": "scenario_id",
+                "type": "string"
+            },
+            {
+                "name": "tenant_id",
+                "type": "string"
+            }
+        ],
+        "sync": true,
+        "custom_monitor": true
+    }
+]
