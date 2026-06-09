@@ -3,7 +3,7 @@
 // OpenTelemetry configuration file
 // Configure OpenTelemetry for monitoring and tracing
 
-import { NodeTracerProvider } from '@opentelemetry/sdk-node';
+import { NodeTracerProvider } from '@opentelemetry/sdk-trace-node';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
 

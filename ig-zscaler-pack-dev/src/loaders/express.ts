@@ -9,6 +9,7 @@ import logger from './logger';
 // Import routes
 import zpaRouter from '../routes/zpaRouter';
 import ziaRouter from '../routes/ziaRouter';
+import connectorRouter from '../routes/connectorRouter';
 import healthCheckRouter from '../routes/healthCheckRouter';
 
 export const loadExpress = (): Express => {
@@ -42,6 +43,9 @@ export const loadExpress = (): Express => {
     // ZIA endpoints
     app.use(`${apiPrefix}/zia`, ziaRouter);
 
+    // Connector endpoints
+    app.use(`${apiPrefix}/connectors`, connectorRouter);
+
     // Default route
     app.get('/', (req, res) => {
         res.json({
@@ -51,6 +55,7 @@ export const loadExpress = (): Express => {
                 health: '/health',
                 zpa: `${apiPrefix}/zpa`,
                 zia: `${apiPrefix}/zia`,
+                connectors: `${apiPrefix}/connectors`,
             },
         });
     });

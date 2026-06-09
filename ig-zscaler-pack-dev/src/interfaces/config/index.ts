@@ -6,6 +6,7 @@ export interface ZscalerConfigI {
   zpaBaseUrl?: string;
   ziaBaseUrl?: string;
   authType: 'api-key' | 'oauth2';
+  cloudZone?: string;
 }
 
 export interface EdgeVaultConfigI {

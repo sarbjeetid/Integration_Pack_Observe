@@ -1,5 +1,3 @@
-// src/controllers/zpaController.ts
-
 import { Request, Response } from 'express';
 import * as zpaService from '../services/zpa';
 import { getAuthHeader } from '../services/authentication/authService';
@@ -10,35 +8,49 @@ import { resolveZPABaseUrl } from '../utils/endpointResolver';
 const authType = config.authType;
 
 /**
- * Extract base URL from request (query param, header, or use default)
+ * Extract base URL from request (query param, header, or body)
  */
 const getBaseUrlFromRequest = (req: Request): string | undefined => {
-    // Check query parameter first (?baseUrl=...)
     if (req.query.baseUrl && typeof req.query.baseUrl === 'string') {
         return req.query.baseUrl;
     }
-    
-    // Check request header (X-Zscaler-Base-URL)
-    if (req.headers['x-zscaler-base-url'] && typeof req.headers['x-zscaler-base-url'] === 'string') {
+
+    if (
+        req.headers['x-zscaler-base-url'] &&
+        typeof req.headers['x-zscaler-base-url'] === 'string'
+    ) {
         return req.headers['x-zscaler-base-url'];
     }
-    
-    // Check request body (for POST/PUT requests)
+
     if (req.body?.zpaBaseUrl) {
         return req.body.zpaBaseUrl;
     }
-    
+
     return undefined;
 };
 
 /**
  * List all ZPA applications
  */
-export const listApplicationsController = async (req: Request, res: Response) => {
+export const listApplicationsController = async (
+    req: Request,
+    res: Response
+) => {
     try {
-        const baseUrl = getBaseUrlFromRequest(req) || resolveZPABaseUrl();
-        const authHeader = await getAuthHeader(authType, undefined, baseUrl);
-        const applications = await zpaService.listApplications(authHeader, baseUrl);
+        const baseUrl =
+            getBaseUrlFromRequest(req) || resolveZPABaseUrl();
+
+        const authHeader = await getAuthHeader(
+            authType,
+            undefined,
+            baseUrl
+        );
+
+        const applications = await zpaService.listApplications(
+            authHeader,
+            baseUrl
+        );
+
         res.json(applications);
     } catch (error) {
         handleControllerError(error, res, 'List ZPA Applications');
@@ -48,15 +60,34 @@ export const listApplicationsController = async (req: Request, res: Response) =>
 /**
  * Get a specific ZPA application
  */
-export const getApplicationController = async (req: Request, res: Response) => {
+export const getApplicationController = async (
+    req: Request,
+    res: Response
+) => {
     try {
         const { applicationId } = req.params;
+
         if (!applicationId) {
-            throw new Error('[getApplicationController] Missing applicationId in request params');
+            throw new Error(
+                '[getApplicationController] Missing applicationId in request params'
+            );
         }
-        const baseUrl = getBaseUrlFromRequest(req) || resolveZPABaseUrl();
-        const authHeader = await getAuthHeader(authType, undefined, baseUrl);
-        const application = await zpaService.getApplicationById(applicationId, authHeader, baseUrl);
+
+        const baseUrl =
+            getBaseUrlFromRequest(req) || resolveZPABaseUrl();
+
+        const authHeader = await getAuthHeader(
+            authType,
+            undefined,
+            baseUrl
+        );
+
+        const application = await zpaService.getApplicationById(
+            applicationId,
+            authHeader,
+            baseUrl
+        );
+
         res.json(application);
     } catch (error) {
         handleControllerError(error, res, 'Get ZPA Application');
@@ -66,11 +97,25 @@ export const getApplicationController = async (req: Request, res: Response) => {
 /**
  * List all ZPA users
  */
-export const listUsersController = async (req: Request, res: Response) => {
-    try {baseUrl = getBaseUrlFromRequest(req) || resolveZPABaseUrl();
-        const authHeader = await getAuthHeader(authType, undefined, baseUrl);
-        const users = await zpaService.listUsers(authHeader, bd, zpaBaseUrl || baseUrl);
-        const users = await zpaService.listUsers(authHeader, zpaBaseUrl);
+export const listUsersController = async (
+    req: Request,
+    res: Response
+) => {
+    try {
+        const baseUrl =
+            getBaseUrlFromRequest(req) || resolveZPABaseUrl();
+
+        const authHeader = await getAuthHeader(
+            authType,
+            undefined,
+            baseUrl
+        );
+
+        const users = await zpaService.listUsers(
+            authHeader,
+            baseUrl
+        );
+
         res.json(users);
     } catch (error) {
         handleControllerError(error, res, 'List ZPA Users');
@@ -80,15 +125,34 @@ export const listUsersController = async (req: Request, res: Response) => {
 /**
  * Get a specific ZPA user
  */
-export const getUserController = async (req: Request, res: Response) => {
+export const getUserController = async (
+    req: Request,
+    res: Response
+) => {
     try {
         const { userId } = req.params;
+
         if (!userId) {
-            throw new Error('[getUserController] Missing userId in request params');
-        }baseUrl = getBaseUrlFromRequest(req) || resolveZPABaseUrl();
-        const authHeader = await getAuthHeader(authType, undefined, baseUrl);
-        const user = await zpaService.getUserById(userId, authHeader, beUrl || baseUrl);
-        const user = await zpaService.getUserById(userId, authHeader, zpaBaseUrl);
+            throw new Error(
+                '[getUserController] Missing userId in request params'
+            );
+        }
+
+        const baseUrl =
+            getBaseUrlFromRequest(req) || resolveZPABaseUrl();
+
+        const authHeader = await getAuthHeader(
+            authType,
+            undefined,
+            baseUrl
+        );
+
+        const user = await zpaService.getUserById(
+            userId,
+            authHeader,
+            baseUrl
+        );
+
         res.json(user);
     } catch (error) {
         handleControllerError(error, res, 'Get ZPA User');
@@ -98,15 +162,34 @@ export const getUserController = async (req: Request, res: Response) => {
 /**
  * Create a new ZPA user
  */
-export const createUserController = async (req: Request, res: Response) => {
+export const createUserController = async (
+    req: Request,
+    res: Response
+) => {
     try {
         const userData = req.body;
+
         if (!userData?.name || !userData?.email) {
-            throw new Error('[createUserController] Missing required fields: name, email');
-        }baseUrl = getBaseUrlFromRequest(req) || resolveZPABaseUrl();
-        const authHeader = await getAuthHeader(authType, undefined, baseUrl);
-        const newUser = await zpaService.createUser(userData, authHeader, b || baseUrl);
-        const newUser = await zpaService.createUser(userData, authHeader, zpaBaseUrl);
+            throw new Error(
+                '[createUserController] Missing required fields: name, email'
+            );
+        }
+
+        const baseUrl =
+            getBaseUrlFromRequest(req) || resolveZPABaseUrl();
+
+        const authHeader = await getAuthHeader(
+            authType,
+            undefined,
+            baseUrl
+        );
+
+        const newUser = await zpaService.createUser(
+            userData,
+            authHeader,
+            baseUrl
+        );
+
         res.status(201).json(newUser);
     } catch (error) {
         handleControllerError(error, res, 'Create ZPA User');
@@ -116,16 +199,36 @@ export const createUserController = async (req: Request, res: Response) => {
 /**
  * Update an existing ZPA user
  */
-export const updateUserController = async (req: Request, res: Response) => {
+export const updateUserController = async (
+    req: Request,
+    res: Response
+) => {
     try {
         const { userId } = req.params;
         const userData = req.body;
+
         if (!userId) {
-            thbaseUrl = getBaseUrlFromRequest(req) || resolveZPABaseUrl();
-        const authHeader = await getAuthHeader(authType, undefined, baseUrl);
-        const updatedUser = await zpaService.updateUser(userId, userData, authHeader, b
-        const authHeader = await getAuthHeader(authType, undefined, zpaBaseUrl || baseUrl);
-        const updatedUser = await zpaService.updateUser(userId, userData, authHeader, zpaBaseUrl);
+            throw new Error(
+                '[updateUserController] Missing userId in request params'
+            );
+        }
+
+        const baseUrl =
+            getBaseUrlFromRequest(req) || resolveZPABaseUrl();
+
+        const authHeader = await getAuthHeader(
+            authType,
+            undefined,
+            baseUrl
+        );
+
+        const updatedUser = await zpaService.updateUser(
+            userId,
+            userData,
+            authHeader,
+            baseUrl
+        );
+
         res.json(updatedUser);
     } catch (error) {
         handleControllerError(error, res, 'Update ZPA User');
@@ -135,11 +238,25 @@ export const updateUserController = async (req: Request, res: Response) => {
 /**
  * List all ZPA access policies
  */
-export const lbaseUrl = getBaseUrlFromRequest(req) || resolveZPABaseUrl();
-        const authHeader = await getAuthHeader(authType, undefined, baseUrl);
-        const policies = await zpaService.listAccessPolicies(authHeader, b
-        const authHeader = await getAuthHeader(authType, undefined, zpaBaseUrl || baseUrl);
-        const policies = await zpaService.listAccessPolicies(authHeader, zpaBaseUrl);
+export const listPoliciesController = async (
+    req: Request,
+    res: Response
+) => {
+    try {
+        const baseUrl =
+            getBaseUrlFromRequest(req) || resolveZPABaseUrl();
+
+        const authHeader = await getAuthHeader(
+            authType,
+            undefined,
+            baseUrl
+        );
+
+        const policies = await zpaService.listAccessPolicies(
+            authHeader,
+            baseUrl
+        );
+
         res.json(policies);
     } catch (error) {
         handleControllerError(error, res, 'List ZPA Policies');
@@ -149,15 +266,34 @@ export const lbaseUrl = getBaseUrlFromRequest(req) || resolveZPABaseUrl();
 /**
  * Get a specific ZPA access policy
  */
-export const getPolicyController = async (req: Request, res: Response) => {
+export const getPolicyController = async (
+    req: Request,
+    res: Response
+) => {
     try {
         const { policyId } = req.params;
+
         if (!policyId) {
-            thbaseUrl = getBaseUrlFromRequest(req) || resolveZPABaseUrl();
-        const authHeader = await getAuthHeader(authType, undefined, baseUrl);
-        const policy = await zpaService.getPolicyById(policyId, authHeader, b
-        const authHeader = await getAuthHeader(authType, undefined, zpaBaseUrl || baseUrl);
-        const policy = await zpaService.getPolicyById(policyId, authHeader, zpaBaseUrl);
+            throw new Error(
+                '[getPolicyController] Missing policyId in request params'
+            );
+        }
+
+        const baseUrl =
+            getBaseUrlFromRequest(req) || resolveZPABaseUrl();
+
+        const authHeader = await getAuthHeader(
+            authType,
+            undefined,
+            baseUrl
+        );
+
+        const policy = await zpaService.getPolicyById(
+            policyId,
+            authHeader,
+            baseUrl
+        );
+
         res.json(policy);
     } catch (error) {
         handleControllerError(error, res, 'Get ZPA Policy');
@@ -167,15 +303,34 @@ export const getPolicyController = async (req: Request, res: Response) => {
 /**
  * Create a new ZPA access policy
  */
-export const createPolicyController = async (req: Request, res: Response) => {
+export const createPolicyController = async (
+    req: Request,
+    res: Response
+) => {
     try {
         const policyData = req.body;
-        if (!pbaseUrl = getBaseUrlFromRequest(req) || resolveZPABaseUrl();
-        const authHeader = await getAuthHeader(authType, undefined, baseUrl);
-        const newPolicy = await zpaService.createPolicy(policyData, authHeader, b action');
+
+        if (!policyData?.name || !policyData?.action) {
+            throw new Error(
+                '[createPolicyController] Missing required fields: name, action'
+            );
         }
-        const authHeader = await getAuthHeader(authType, undefined, zpaBaseUrl || baseUrl);
-        const newPolicy = await zpaService.createPolicy(policyData, authHeader, zpaBaseUrl);
+
+        const baseUrl =
+            getBaseUrlFromRequest(req) || resolveZPABaseUrl();
+
+        const authHeader = await getAuthHeader(
+            authType,
+            undefined,
+            baseUrl
+        );
+
+        const newPolicy = await zpaService.createPolicy(
+            policyData,
+            authHeader,
+            baseUrl
+        );
+
         res.status(201).json(newPolicy);
     } catch (error) {
         handleControllerError(error, res, 'Create ZPA Policy');
@@ -185,16 +340,36 @@ export const createPolicyController = async (req: Request, res: Response) => {
 /**
  * Update an existing ZPA access policy
  */
-export const updatePolicyController = async (req: Request, res: Response) => {
+export const updatePolicyController = async (
+    req: Request,
+    res: Response
+) => {
     try {
         const { policyId } = req.params;
         const policyData = req.body;
-        if (!pbaseUrl = getBaseUrlFromRequest(req) || resolveZPABaseUrl();
-        const authHeader = await getAuthHeader(authType, undefined, baseUrl);
-        const updatedPolicy = await zpaService.updatePolicy(policyId, policyData, authHeader, b
+
+        if (!policyId) {
+            throw new Error(
+                '[updatePolicyController] Missing policyId in request params'
+            );
         }
-        const authHeader = await getAuthHeader(authType, undefined, zpaBaseUrl || baseUrl);
-        const updatedPolicy = await zpaService.updatePolicy(policyId, policyData, authHeader, zpaBaseUrl);
+
+        const baseUrl =
+            getBaseUrlFromRequest(req) || resolveZPABaseUrl();
+
+        const authHeader = await getAuthHeader(
+            authType,
+            undefined,
+            baseUrl
+        );
+
+        const updatedPolicy = await zpaService.updatePolicy(
+            policyId,
+            policyData,
+            authHeader,
+            baseUrl
+        );
+
         res.json(updatedPolicy);
     } catch (error) {
         handleControllerError(error, res, 'Update ZPA Policy');
@@ -204,17 +379,37 @@ export const updatePolicyController = async (req: Request, res: Response) => {
 /**
  * Delete a ZPA access policy
  */
-export const deletePolicyController = async (req: Request, res: Response) => {
+export const deletePolicyController = async (
+    req: Request,
+    res: Response
+) => {
     try {
-        const baseUrl = getBaseUrlFromRequest(req) || resolveZPABaseUrl();
-        const authHeader = await getAuthHeader(authType, undefined, baseUrl);
-        await zpaService.deletePolicy(policyId, authHeader, b
-            throw new Error('[deletePolicyController] Missing policyId in request params');
+        const { policyId } = req.params;
+
+        if (!policyId) {
+            throw new Error(
+                '[deletePolicyController] Missing policyId in request params'
+            );
         }
-        const authHeader = await getAuthHeader(authType, undefined, zpaBaseUrl || baseUrl);
-        await zpaService.deletePolicy(policyId, authHeader, zpaBaseUrl);
+
+        const baseUrl =
+            getBaseUrlFromRequest(req) || resolveZPABaseUrl();
+
+        const authHeader = await getAuthHeader(
+            authType,
+            undefined,
+            baseUrl
+        );
+
+        await zpaService.deletePolicy(
+            policyId,
+            authHeader,
+            baseUrl
+        );
+
         res.status(204).send();
     } catch (error) {
         handleControllerError(error, res, 'Delete ZPA Policy');
     }
 };
+
