@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  zscaler-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      NODE_ENV: development
+      ZSCALER_API_KEY: ${ZSCALER_API_KEY}
+      ZSCALER_CLIENT_ID: ${ZSCALER_CLIENT_ID}
+      ZSCALER_CLIENT_SECRET: ${ZSCALER_CLIENT_SECRET}
+      ZSCALER_BASE_URL: ${ZSCALER_BASE_URL:-https://api.zscloud.net}
+      ZSCALER_AUTH_TYPE: ${ZSCALER_AUTH_TYPE:-api-key}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      VAULT_ENDPOINT: ${VAULT_ENDPOINT:-http://vault:8200}
+      DAPR_HOST: localhost
+      DAPR_HTTP_PORT: 3500
+    depends_on:
+      - redis
+    volumes:
+      - ./src:/app/src
+      - /app/node_modules
+    networks:
+      - zscaler-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - zscaler-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+networks:
+  zscaler-network:
+    driver: bridge

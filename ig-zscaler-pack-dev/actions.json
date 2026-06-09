@@ -1,0 +1,558 @@
+[
+    {
+        "name": "ListZPAApplications",
+        "description": "List all ZPA applications",
+        "method": "GET",
+        "url": "/api/v1/zpa/applications",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zpa",
+                "applications"
+            ]
+        }
+    },
+    {
+        "name": "GetZPAApplication",
+        "description": "Get a specific ZPA application by ID",
+        "method": "GET",
+        "url": "/api/v1/zpa/applications/{applicationId}",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zpa",
+                "applications"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "applicationId",
+                "type": "string",
+                "required": true
+            }
+        ]
+    },
+    {
+        "name": "ListZPAUsers",
+        "description": "List all ZPA users",
+        "method": "GET",
+        "url": "/api/v1/zpa/users",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zpa",
+                "users"
+            ]
+        }
+    },
+    {
+        "name": "GetZPAUser",
+        "description": "Get a specific ZPA user by ID",
+        "method": "GET",
+        "url": "/api/v1/zpa/users/{userId}",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zpa",
+                "users"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "userId",
+                "type": "string",
+                "required": true
+            }
+        ]
+    },
+    {
+        "name": "CreateZPAUser",
+        "description": "Create a new ZPA user",
+        "method": "POST",
+        "url": "/api/v1/zpa/users",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zpa",
+                "users"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "name",
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "email",
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "department",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "groups",
+                "type": "array",
+                "optional": true
+            },
+            {
+                "name": "comments",
+                "type": "string",
+                "optional": true
+            }
+        ]
+    },
+    {
+        "name": "UpdateZPAUser",
+        "description": "Update an existing ZPA user",
+        "method": "PUT",
+        "url": "/api/v1/zpa/users/{userId}",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zpa",
+                "users"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "userId",
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "name",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "email",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "department",
+                "type": "string",
+                "optional": true
+            }
+        ]
+    },
+    {
+        "name": "ListZPAPolicies",
+        "description": "List all ZPA access policies",
+        "method": "GET",
+        "url": "/api/v1/zpa/policies",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zpa",
+                "policies"
+            ]
+        }
+    },
+    {
+        "name": "GetZPAPolicy",
+        "description": "Get a specific ZPA access policy by ID",
+        "method": "GET",
+        "url": "/api/v1/zpa/policies/{policyId}",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zpa",
+                "policies"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "policyId",
+                "type": "string",
+                "required": true
+            }
+        ]
+    },
+    {
+        "name": "CreateZPAPolicy",
+        "description": "Create a new ZPA access policy",
+        "method": "POST",
+        "url": "/api/v1/zpa/policies",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zpa",
+                "policies"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "name",
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "action",
+                "type": "string",
+                "enum": ["ALLOW", "DENY"],
+                "required": true
+            },
+            {
+                "name": "description",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "enabled",
+                "type": "boolean",
+                "optional": true
+            },
+            {
+                "name": "conditions",
+                "type": "object",
+                "optional": true
+            }
+        ]
+    },
+    {
+        "name": "UpdateZPAPolicy",
+        "description": "Update an existing ZPA access policy",
+        "method": "PUT",
+        "url": "/api/v1/zpa/policies/{policyId}",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zpa",
+                "policies"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "policyId",
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "name",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "action",
+                "type": "string",
+                "enum": ["ALLOW", "DENY"],
+                "optional": true
+            },
+            {
+                "name": "description",
+                "type": "string",
+                "optional": true
+            }
+        ]
+    },
+    {
+        "name": "DeleteZPAPolicy",
+        "description": "Delete a ZPA access policy",
+        "method": "DELETE",
+        "url": "/api/v1/zpa/policies/{policyId}",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zpa",
+                "policies"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "policyId",
+                "type": "string",
+                "required": true
+            }
+        ]
+    },
+    {
+        "name": "ListZIAURLCategories",
+        "description": "List all ZIA URL categories",
+        "method": "GET",
+        "url": "/api/v1/zia/url-categories",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zia",
+                "url-categories"
+            ]
+        }
+    },
+    {
+        "name": "GetZIAURLCategory",
+        "description": "Get a specific ZIA URL category by ID",
+        "method": "GET",
+        "url": "/api/v1/zia/url-categories/{categoryId}",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zia",
+                "url-categories"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "categoryId",
+                "type": "string",
+                "required": true
+            }
+        ]
+    },
+    {
+        "name": "ListZIAURLPolicies",
+        "description": "List all ZIA URL filtering policies",
+        "method": "GET",
+        "url": "/api/v1/zia/url-policies",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zia",
+                "url-policies"
+            ]
+        }
+    },
+    {
+        "name": "GetZIAURLPolicy",
+        "description": "Get a specific ZIA URL policy by ID",
+        "method": "GET",
+        "url": "/api/v1/zia/url-policies/{policyId}",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zia",
+                "url-policies"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "policyId",
+                "type": "string",
+                "required": true
+            }
+        ]
+    },
+    {
+        "name": "CreateZIAURLPolicy",
+        "description": "Create a new ZIA URL filtering policy",
+        "method": "POST",
+        "url": "/api/v1/zia/url-policies",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zia",
+                "url-policies"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "name",
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "action",
+                "type": "string",
+                "enum": ["ALLOW", "BLOCK", "CAUTION"],
+                "required": true
+            },
+            {
+                "name": "urlCategories",
+                "type": "array",
+                "required": true
+            },
+            {
+                "name": "description",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "users",
+                "type": "array",
+                "optional": true
+            },
+            {
+                "name": "groups",
+                "type": "array",
+                "optional": true
+            },
+            {
+                "name": "enabled",
+                "type": "boolean",
+                "optional": true
+            }
+        ]
+    },
+    {
+        "name": "UpdateZIAURLPolicy",
+        "description": "Update an existing ZIA URL policy",
+        "method": "PUT",
+        "url": "/api/v1/zia/url-policies/{policyId}",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zia",
+                "url-policies"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "policyId",
+                "type": "string",
+                "required": true
+            },
+            {
+                "name": "name",
+                "type": "string",
+                "optional": true
+            },
+            {
+                "name": "action",
+                "type": "string",
+                "enum": ["ALLOW", "BLOCK", "CAUTION"],
+                "optional": true
+            },
+            {
+                "name": "description",
+                "type": "string",
+                "optional": true
+            }
+        ]
+    },
+    {
+        "name": "DeleteZIAURLPolicy",
+        "description": "Delete a ZIA URL policy",
+        "method": "DELETE",
+        "url": "/api/v1/zia/url-policies/{policyId}",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zia",
+                "url-policies"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "policyId",
+                "type": "string",
+                "required": true
+            }
+        ]
+    },
+    {
+        "name": "GetZIAThreatReports",
+        "description": "Get ZIA threat reports",
+        "method": "GET",
+        "url": "/api/v1/zia/threat-reports",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zia",
+                "security"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "startTime",
+                "type": "number",
+                "optional": true
+            },
+            {
+                "name": "endTime",
+                "type": "number",
+                "optional": true
+            }
+        ]
+    },
+    {
+        "name": "GetZIADLPIncidents",
+        "description": "Get ZIA DLP incidents",
+        "method": "GET",
+        "url": "/api/v1/zia/dlp-incidents",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zia",
+                "security"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "startTime",
+                "type": "number",
+                "optional": true
+            },
+            {
+                "name": "endTime",
+                "type": "number",
+                "optional": true
+            }
+        ]
+    },
+    {
+        "name": "GetZIAAdminAuditLogs",
+        "description": "Get ZIA admin audit logs",
+        "method": "GET",
+        "url": "/api/v1/zia/admin-audit-logs",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zia",
+                "audit"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "startTime",
+                "type": "number",
+                "optional": true
+            },
+            {
+                "name": "endTime",
+                "type": "number",
+                "optional": true
+            }
+        ]
+    },
+    {
+        "name": "GetZIASecurityReport",
+        "description": "Get ZIA security summary report",
+        "method": "GET",
+        "url": "/api/v1/zia/security-report",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "zia",
+                "security"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "startTime",
+                "type": "number",
+                "optional": true
+            },
+            {
+                "name": "endTime",
+                "type": "number",
+                "optional": true
+            }
+        ]
+    },
+    {
+        "name": "HealthCheck",
+        "description": "Check API health and connectivity",
+        "method": "GET",
+        "url": "/health",
+        "tags": {
+            "integration": [
+                "zscaler",
+                "health"
+            ]
+        }
+    }
+]
