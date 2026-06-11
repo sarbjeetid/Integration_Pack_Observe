@@ -554,5 +554,33 @@
                 "health"
             ]
         }
+    },
+    {
+        "name": "ZscalerDiscovery",
+        "description": "Discover Zscaler nodes and relationships",
+        "method": "POST",
+        "url": "/api/discovery/start",
+        "tags": {
+            "onboarding": [
+                "zscaler-discovery-action"
+            ]
+        },
+        "parameters": [
+            {
+                "name": "zone_id",
+                "type": "string"
+            },
+            {
+                "name": "stack_id",
+                "type": "string"
+            },
+            {
+                "name": "vault_path",
+                "type": "string"
+            }
+        ],
+        "sync": true,
+        "custom_monitor": true
     }
 ]
+

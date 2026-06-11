@@ -11,6 +11,7 @@ import zpaRouter from '../routes/zpaRouter';
 import ziaRouter from '../routes/ziaRouter';
 import connectorRouter from '../routes/connectorRouter';
 import healthCheckRouter from '../routes/healthCheckRouter';
+import discoveryRouter from '../routes/discoveryRouter';
 
 export const loadExpress = (): Express => {
     const app = express();
@@ -37,6 +38,9 @@ export const loadExpress = (): Express => {
     app.use('/health', healthCheckRouter);
     app.use(`${apiPrefix}/health`, healthCheckRouter);
 
+    // Discovery endpoints
+    app.use('/api/discovery', discoveryRouter);
+
     // ZPA endpoints
     app.use(`${apiPrefix}/zpa`, zpaRouter);
 
@@ -45,6 +49,7 @@ export const loadExpress = (): Express => {
 
     // Connector endpoints
     app.use(`${apiPrefix}/connectors`, connectorRouter);
+
 
     // Default route
     app.get('/', (req, res) => {

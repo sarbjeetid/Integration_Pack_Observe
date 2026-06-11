@@ -19,7 +19,7 @@ const ZSCALER_ZONES_MAP: { [key: string]: string } = {
 };
 
 const zscalerConfig: ZscalerConfigI = {
-    apiKey: process.env.ZSCALER_API_KEY || '',
+    // apiKey: process.env.ZSCALER_API_KEY || '',
     clientId: process.env.ZSCALER_CLIENT_ID || '',
     clientSecret: process.env.ZSCALER_CLIENT_SECRET || '',
     baseUrl: normalizeUrl(process.env.ZSCALER_BASE_URL) || ZSCALER_ZONES_MAP['us'],

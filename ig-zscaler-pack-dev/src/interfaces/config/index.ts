@@ -31,6 +31,15 @@ export interface DiscoveryConfigI {
     enabled: boolean;
     interval: number;
   };
+  discoveryPubSubName?: string;
+  corePubSubName?: string;
+  startDiscoveryTopicName?: string;
+  listResourcesTopicName?: string;
+  describeResourceTopicName?: string;
+  describeAllResourcesTopicName?: string;
+  describeAllRelationshipsTopicName?: string;
+  coreDiscoveryTopicName?: string;
+  waitTimeInMs?: number;
 }
 
 export interface PackConfigI {
@@ -38,6 +47,7 @@ export interface PackConfigI {
     name: string;
     version: string;
   };
+  packLocation?: string;
 }
 
 export interface VaultConfigI {
@@ -48,3 +58,16 @@ export interface VaultConfigI {
     requestTimeout: number;
   };
 }
+
+export interface ZscalerDiscoveryBodyI {
+  zone_id: string;
+  stack_id: string;
+  vault_path: string;
+  apiKey?: string;
+  clientId?: string;
+  clientSecret?: string;
+  customerId?: string;
+  zpaBaseUrl?: string;
+  ziaBaseUrl?: string;
+}
+
